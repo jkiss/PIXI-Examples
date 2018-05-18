@@ -12,6 +12,21 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
 
+// Generate HTML file to 'output' folder, each of html need a plugin
+let html_config = []
+
+config.pages.forEach((e)=>{
+    html_config.push(
+        new htmlWebpackPlugin({
+            inject: false,
+            filename: e.public_name,
+            template: path.resolve(__dirname, '../src/htmlTemplates/app.ejs'),
+            _entry: e.entry.split('/').join('.'),  // 用于多页判断
+            page: e.meta
+        })
+    )
+})
+
 module.exports = {
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
@@ -42,21 +57,14 @@ module.exports = {
         // Extract css file for every entry files
         ,new ExtractTextPlugin('bundle/[name].css')
 
-        // Generate HTML file to 'output' folder, each of html need a plugin
-        ,new htmlWebpackPlugin({
-            inject: false,
-            filename: 'index.html',
-            template: path.resolve(__dirname, '../src/htmlTemplates/app.ejs'),
-            _entry: 'home.index',  // 用于多页判断
-            page: config.page1
-        })
-        ,new htmlWebpackPlugin({
-            inject: false,
-            filename: 'about/index.html',
-            template: path.resolve(__dirname, '../src/htmlTemplates/app.ejs'),
-            _entry: 'about.index',  // 用于多页判断
-            page: config.page2
-        })
+        // // Generate HTML file to 'output' folder, each of html need a plugin
+        // ,new htmlWebpackPlugin({
+        //     inject: false,
+        //     filename: 'index.html',
+        //     template: path.resolve(__dirname, '../src/htmlTemplates/app.ejs'),
+        //     _entry: 'home.index',  // 用于多页判断
+        //     page: config.page1
+        // })
 
         // Automatically loaded modules when identifier is used as free variable in a module
         ,new webpack.ProvidePlugin({
@@ -77,5 +85,5 @@ module.exports = {
                 to: ''
             }
         ])
-    ]
+    ].concat(html_config)
 }

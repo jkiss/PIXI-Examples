@@ -6,14 +6,14 @@
 'use strict';
 
 const path = require('path');
+const config = require('../config');
 
-const PAGE_PATH = [
-    // config you page path here
-    'home/index'
+const PAGE_PATH = [],
+      ENTRY = {};
 
-    ,'about/index'
-
-], ENTRY = {};
+config.pages.forEach((e)=>{
+    PAGE_PATH.push(e.entry)
+})
 
 PAGE_PATH.forEach((page) => {
     ENTRY[page.split("/").join(".")] = path.resolve(__dirname, '../src/pages/' + page + '.js');

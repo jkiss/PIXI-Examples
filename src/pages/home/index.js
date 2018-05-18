@@ -7,11 +7,10 @@
 'use strict';
 
 // Plugins
-import 'fullpage.js'
-
-// Utils
+import * as PIXI from 'pixi.js'
 import { TimelineLite } from 'gsap'
 import Util from 'utils'
+import _log_hire from 'nk-hire'
 
 // Style
 import '../../fonts/roboto-thin.styl'
@@ -37,7 +36,7 @@ class MyComponent extends React.Component {
     }
 
     componentDidMount() {
-        console.log('%c' + 'CGTN', 'font-family: "courier new"; color:#000; font-size:24px; font-weight:bold; text-shadow:0 0 6px #22ff22;');
+        _log_hire()
 
         let _me = this
 
@@ -51,7 +50,6 @@ class MyComponent extends React.Component {
          * Config
          */
         _me._app = $('#app')
-        _me.fullpage_sections = $('.fullpage-slide');
 
         /**
          * Register global eventlistener
@@ -95,50 +93,7 @@ class MyComponent extends React.Component {
             }
         })
 
-        /**
-         * Init fullpage
-         * 
-         * Fragment code:
-         * $.fn.fullpage.setAllowScrolling(false)
-         */
-        $('#fullpage').fullpage({
-            sectionSelector: '.fullpage-slide',
-            normalScrollElements: '.fp-normal-scroll',
-            touchSensitivity: 15,
-            scrollingSpeed: Util.isIE() ? 1300 : 800,
-            scrollHorizontally: true,
-            loopHorizontal: false,
-            controlArrows: false,
-
-            // Events
-            afterLoad: (anchorLink, index)=>{
-                // $(window).trigger('scroll-fullpage', 
-                //     {type: 'SWIPE', payload: {
-                //         show: true,
-                //         color: 'red'
-                //     }}
-                // );
-
-                let current_page = _me.fullpage_sections.eq(index - 1)
-
-                // Start every page animation
-                !this.state.loading && _me[current_page.data('id')].initAni()
-
-            },
-            onLeave: (index, nextIndex, dir)=>{
-                console.log('Leave', index, nextIndex, dir)
-
-                let next_page = _me.fullpage_sections.eq(nextIndex-1);
-
-                // Clear page animation
-                _me[next_page.data('id')].resetAni()
-            },
-            afterRender: ()=>{
-                // DOM is ready
-                console.log('fp render')
-
-            }
-        });
+        
     }
     
     render() {
