@@ -83,6 +83,10 @@ module.exports = {
             {
                 from: 'favicon.png',
                 to: ''
+            },
+            {
+                from: 'src/images/copy',
+                to: 'images/'
             }
         ])
     ].concat(html_config)

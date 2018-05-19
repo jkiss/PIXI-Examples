@@ -7,18 +7,21 @@
 'use strict';
 
 // Plugins
-import * as PIXI from 'pixi.js'
 import { TimelineLite } from 'gsap'
 import Util from 'utils'
 import _log_hire from 'nk-hire'
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 // Style
-import '../../fonts/roboto-thin.styl'
+import 'roboto-regular.styl'
 import styles from './css.styl'
 
 // Pages
 import Page1 from './Page1'
 import Page2 from './Page2'
+import Example_1 from "./Example_1";
 
 class MyComponent extends React.Component {
     constructor(props) {
@@ -32,7 +35,6 @@ class MyComponent extends React.Component {
         this.TL = null
 
         this._app = null
-        this.fullpage_sections = null
     }
 
     componentDidMount() {
@@ -93,19 +95,20 @@ class MyComponent extends React.Component {
             }
         })
 
-        
     }
     
     render() {
         return (
             <section className={styles.home}>
-                {/* Full Page */}
-                <div id="fullpage">
-                    {/* Story 1 */}
-                    <Page1 ref={_this => this.page1 = _this} />
-
-                    <Page2 ref={_this => this.page2 = _this} />
-                </div>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="display2" color="inherit">
+                            Will start from here
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                {/* Example 1 */}
+                <Example_1 />
             </section>
         );
     }
